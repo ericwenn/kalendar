@@ -12,3 +12,19 @@ Supported customizations include:
 
 Usage
 -------
+
+kalendar can be initialized with both pure HTML and JS. Personally I prefer JS because it gives you a better overview of the options. But you are free to use whatever you’d like. Obviously.
+
+First of all though, you have to import the .css and .js file to your project.
+
+### initialize with JS
+
+#### Simple kalendar
+
+<pre>
+jQuery(".kalendar-element").kalendar();	
+</pre>
+
+
+
+
