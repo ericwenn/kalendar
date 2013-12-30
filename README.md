@@ -13,11 +13,14 @@ Supported customizations include:
 Usage
 -------
 
-kalendar can be initialized with both pure HTML and JS. Personally I prefer JS because it gives you a better overview of the options. But you are free to use whatever you’d like. Obviously.
+flat_calendar could be initialized with both HTML and JS, but I have discountinued developing with HTML support. flat_calendar is still available as a repo https://github.com/ericwenn/flat_calendar if you would like HTML support.  
+The reason for this is as the plugin grew more complex and more customizations were added initializing with HTML became harder. Both to write but also for me to parse.
+
+So kalendar only supports JS initialization, and it is for the best.
 
 First of all though, you have to import the .css and .js file to your project.
 
-### initialize with JS
+### Initialize
 
 #### Simple kalendar
 
@@ -28,7 +31,7 @@ This will display a red, awesome but pretty useless calendar. No events, no cust
 
 #### Customized kalendar
 
-When initializing your kalendar, include a set of options. These are all of the available:
+When initializing your kalendar, include a set of options. These are all of the available:  
 __Especially note the tracking variable__
 ```javascript
 $('.example').kalendar({
@@ -46,7 +49,7 @@ $('.example').kalendar({
 				time: "HH.MM"					// "20.00"
 			},
 			location: "Location",				// "London"
-			}
+		}
 	],
 
 	// Currently available colors are: red, blue, green, yellow. Red is the default.
@@ -57,7 +60,7 @@ $('.example').kalendar({
 
 	// Google Calendar reference are objects, place inside of an array to support multiple calendars.
 	// If you are unsure how to get an API-key visit: https://developers.google.com/google-apps/calendar/firstapp
-	// If you are unsude how to get your calendar visit: https://support.google.com/calendar/answer/63962?hl=en
+	// If you are unsure how to get your calendar visit: https://support.google.com/calendar/answer/63962?hl=en
 	googleCal: [{
 		calendar: "calendarID",
 		apikey: "APIkey"
@@ -69,16 +72,17 @@ $('.example').kalendar({
 
 	// Any name is possible, but note that not all names might fit in the UI
 
-	monthHuman: [["JAN","January"],["FEB","February"],["MAR","March"],["APR","April"],["MAY","May"],["JUN","June"],["JUL","July"],["AUG","August"],["SEP","September"],["OCT","October"],["NOV","November"],["DEC","December"]],
+	monthHuman: [["JAN","January"],["FEB","February"], etc... ],
 
 	// Regarding name lengths same applies here
-	
-	dayHuman: [["S","Sunday"],["M","Monday"],["T","Thursday"],["W","Wednesday"],["T","Thursday"],["F","Friday"],["S","Saturday"]]
 
+	dayHuman: [["S","Sunday"],["M","Monday"], etc... ],
+
+	// I decided to track people using this plugin in order to make it even better. 
+	// The things I collect are URL, color, showday, firstdayofweek.
+	// Pass this variable as false and no tracking whatsoever will be done.
+	// ***TRUE IS SET AS DEFAULT*** 
+	tracking: true
 });
 
 ```
-
-
-
-

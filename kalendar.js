@@ -64,7 +64,6 @@
 		this.trackimg = $trackimg;
 		this.element.append(this.trackimg);
 		var trackobj = {
-			source: this.options.source,
 			url: window.location.href,
 			color: this.options.color,
 			showdays: this.options.showdays,
@@ -250,32 +249,6 @@
 		});
 	}
 
-	$('.kalendar').each(function() {
-		$this = $(this);
-		options = $this.data();
-		options.source = "PHP";
-		options.eventsParsed = [];
-		$this.find('[data-role=day]').each(function() {
-			var t = {};
-			t.start = {};
-			t.end = {};
-			t.start.date = $(this).data('date');
-			$(this).find('[data-role=event]').each(function() {
-				var d = $(this).data();
-				t.start.time = d.start;
-				t.end.date = d.dateend == undefined ? t.start.date : d.dateend;
-				t.end.time = d.end;
-				t.start.d = formatToD([t.start.date, t.start.time], "YYYYMMDDHHMM");
-				t.end.d = formatToD([t.end.date, t.end.time], "YYYYMMDDHHMM");
-				t.title = d.title;
-				t.location = d.location;
-				options.eventsParsed = pushToParsed(options.eventsParsed, t);
-			});
-		});
-		var kalendar_instance = new kalendar($this, options);
-		$this.data('kalendar-instance', kalendar_instance);
-	});
-
 	function pushToParsed(o, e) {
 		var pusher = function(o,e,d) {
 			var d = d !== undefined ? d: e.start.date;
@@ -368,36 +341,3 @@
 
 
 })(jQuery, window, document);
-
-
-$(document).ready(function() {
-	$('.example').kalendar({ 
-		events: [
-			{
-				title:"Mulberry Festival",
-				start: {
-					date: 20131215,
-					time: "12.00"
-				},
-				end: {
-					date: "20131216",
-					time: "14.00"
-				},
-				location: "London",
-
-			}
-		],
-		color: "blue",
-		firstDayOfWeek: "Sunday",
-		googleCal: [{
-			calendar: "benny.olsson63@gmail.com",
-			apikey: "AIzaSyDK9DShwsjJu5HNUHsmcMaxdWhdyuf458Y"
-		},
-		{
-			calendar: "ericwenn@gmail.com",
-			apikey: "AIzaSyDK9DShwsjJu5HNUHsmcMaxdWhdyuf458Y"
-		}]
-
-	});
-
-});
