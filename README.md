@@ -20,16 +20,14 @@ So kalendar only supports JS initialization, and it is for the best.
 
 First of all though, you have to import the .css and .js file to your project.
 
-### Initialize
-
-#### Simple kalendar
+### Simple kalendar
 
 ```javascript
 jQuery(".kalendar-element").kalendar();	
 ```
 This will display a red, awesome but pretty useless calendar. No events, no customizations, no funnies.
 
-#### Customized kalendar
+### Customized kalendar
 
 When initializing your kalendar, include a set of options. These are all of the available:  
 __Especially note the tracking variable__
