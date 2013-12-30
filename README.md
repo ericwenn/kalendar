@@ -21,9 +21,9 @@ First of all though, you have to import the .css and .js file to your project.
 
 #### Simple kalendar
 
-<pre>
+```javascript
 jQuery(".kalendar-element").kalendar();	
-</pre>
+```
 
 
 
