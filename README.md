@@ -77,10 +77,31 @@ $('.example').kalendar({
 	dayHuman: [["S","Sunday"],["M","Monday"], etc... ],
 
 	// I decided to track people using this plugin in order to make it even better. 
-	// The things I collect are URL, color, showday, firstdayofweek.
+	// The things I collect are current URL, color or kalendar, whether you decided to show days or not and your selected first day of the week.
 	// Pass this variable as false and no tracking whatsoever will be done.
 	// ***TRUE IS SET AS DEFAULT*** 
 	tracking: true
 });
 
 ```
+
+Todo
+-----
+* Reoccuring events, both for Google Calendar but also custom ones.
+* Add minified version
+
+
+Changelog
+----
+`v1.0.0 2013-12-30`: First version published, yay!
+
+
+Thanks
+-----
+I hope you will like using this plugin as much as I did creating it.  
+If you have __any__ questions regarding this plugin, or just in general, please contact me.
+
+
+Eric Wennerberg
+http://ericwenn.se
+https://twitter.com/ericwenn
