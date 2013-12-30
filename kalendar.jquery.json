@@ -1,0 +1,39 @@
+{
+    "name": "kalendar",
+    "title": "kalendar",
+    "description": "kalendar helps you display a calendar with events, both Google Calendar and custom, on your website.",
+    "keywords": [
+        "calendar",
+        "date",
+        "google",
+        "googlecal",
+        "ui",
+        "ericwenn"
+    ],
+    "version": "1.0.0",
+    "author": {
+        "name": "Eric Wennerberg",
+        "email": "ericwenn@gmail.com",
+        "url": "http://ericwenn.se"
+    },
+    "maintainers": [
+        {
+            "name": "Eric Wennerberg",
+            "email": "ericwenn@gmail.com",
+            "url": "http://ericwenn.se"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    ],
+    "bugs": "https://github.com/ericwenn/kalendar/issues",
+    "homepage": "http://www.ericwenn.se/playground/kalendar/",
+    "docs": "http://www.ericwenn.se/playground/kalendar/",
+    "download": "https://github.com/ericwenn/kalendar/archive/master.zip",
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
+}
