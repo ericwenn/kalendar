@@ -47,6 +47,7 @@ $('.example').kalendar({
 				time: "HH.MM"					// "20.00"
 			},
 			location: "Location",				// "London"
+			url: "http://*.*"					// "http://example.com"
 		}
 	],
 
@@ -76,6 +77,10 @@ $('.example').kalendar({
 
 	dayHuman: [["S","Sunday"],["M","Monday"], etc... ],
 
+	// The text which represents links for events
+
+	urlText: "View on Web",
+
 	// I decided to track people using this plugin in order to make it even better. 
 	// The things I collect are current URL, color or kalendar, whether you decided to show days or not and your selected first day of the week.
 	// Pass this variable as false and no tracking whatsoever will be done.
@@ -87,12 +92,16 @@ $('.example').kalendar({
 
 Todo
 -----
-* Reoccuring events, both for Google Calendar but also custom ones.
+* Reccuring events, both for Google Calendar but also custom ones.
 * Add minified version
+* Unique colors for each event
+* Weeknumber
+* 
 
 
 Changelog
 ----
+`v1.1.0 2014-01-04`: Added links for events.
 `v1.0.0 2013-12-30`: First version published, yay!
 
 

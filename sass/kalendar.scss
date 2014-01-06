@@ -1,0 +1,263 @@
+@mixin calc($v,$k,$f) {
+	#{$v}: #{$f};
+  #{$v}: -moz-calc(#{$k}); 
+  #{$v}: -o-calc(#{$k}); 
+  #{$v}: -webkit-calc(#{$k}); 
+  #{$v}: calc(#{$k}); 
+} 
+@mixin transform($e) {
+-webkit-transform: $e;
+   -moz-transform: $e;
+    -ms-transform: $e;
+     -o-transform: $e;
+        transform: $e;
+}
+@mixin transition($e) {
+-webkit-transition: $e;
+   -moz-transition: $e;
+        transition: $e;
+}
+@mixin user-select($e) {
+	-webkit-user-select: $e;
+-moz-user-select: $e;
+-ms-user-select: $e;
+-o-user-select: $e;
+user-select: $e;
+}
+
+[ewcalendar] {
+	color: white;
+	font-weight: 300;
+	height:20em;
+	line-height:1.5;
+	* {
+		box-sizing:border-box;
+		moz-box-sizing:border-box;
+	}
+	&.small {
+		font-size: 0.8em;
+		font-weight: 100;
+	}
+	.c-month-view {
+		@include transition(all 0.5s);
+		@include user-select(none);
+		height: 12.5%;
+		position:relative;
+		font-size:1.6em;
+		margin-bottom:1px;
+		text-align:center;
+		[class^=c-month-arrow] {
+			width: 15%;
+			height:100%;
+			position: absolute;
+			top: 0;
+			color: transparent;
+			cursor: pointer;
+			&:hover {
+				background: rgba(255, 255, 255, 0.25);
+			}
+		}
+		.c-month-arrow-left {
+				left:0;
+		}
+		.c-month-arrow-right {
+				right:0;
+		}
+	}
+	.c-holder {
+		height:87.5%;
+		position:relative;
+	}
+	.c-grid {
+		position:absolute;
+		height:100%;
+		width:100%;
+		top:0;
+		left:0;
+		.c-row {
+			width:100%;
+			@include calc(margin-bottom, "0px + 1px", 0.2%);
+			@include calc(height, "100%/7 - 7px/6", (100/7) - 1.2%);
+			&:last-child {
+				margin-bottom:0;
+			}
+			.c-day {
+				@include calc(margin-right, "0px + 7px/6", 0.2%);
+				@include calc(width, "100%/7 - 1px", 98.8/7 + 0%);
+				height:100%;
+				display:inline-block;
+				position:relative;
+				&.c-l .date-holder{
+					font-size:1em;
+				}
+				&:last-child {
+					margin-right:0;
+				}
+				&.have-events {
+					cursor:pointer;
+					&:hover {
+						background-color:rgb(35,35,35);
+					}
+				}
+				&.other-month {
+					color:rgb(55,55,55);
+					&.have-events:hover {
+						color:white;
+					}
+				}
+				&.this-day {
+					background:none;
+				}
+				.date-holder {
+					font-size:1.3em;
+					position:absolute;
+					right:5%;
+					bottom:5%;
+				}
+				.event-n-holder {
+					@include calc(height, "100% - 10px", 90%);
+					@include calc(left, "0px + 5px", 5%);
+					@include calc(top, "0px + 5px", 5%);
+					position:absolute;
+					width:0.25em;
+					.event-n {
+						height:0.5em;
+						background-color:white;
+						width:100%;
+						margin:1px 0;
+					}
+				}
+			}
+		}
+	}
+	.c-specific {
+		position:absolute;
+		width:100%;
+		height:100%;
+		left:0;
+		top:0;
+		display:none;
+		padding:1px;
+		padding-top:0px;
+		.specific-day {
+			vertical-align:top;
+			width: 30%;
+			display: inline-block;
+			line-height:1;
+			padding:1em 0;
+			cursor: pointer;
+			text-align:center;
+			&:hover {
+				background: rgb(35, 35, 35);
+			}
+			[i=date] {
+				font-size: 3em;
+			}
+			[i=day] {
+				font-size: 1.5em;
+			}
+		}
+		.s-scheme {
+			display: inline-block;
+			height: 100%;
+			margin-left: 1px;
+			@include calc(width, "70% - 1px", 60%);
+			overflow-y: auto;
+			text-align: left;
+			vertical-align:top;
+			&::-webkit-scrollbar {
+				width:10px;
+			}
+			&::-webkit-scrollbar-track {
+				background: transparent;
+			}
+			&::-webkit-scrollbar-thumb {
+				background: rgb(35,35,35);
+			}
+			.s-event {
+				width:100%;
+				padding: 0.5em;
+				margin: 1px 0;
+				&:first-child {
+					margin-top:0;
+				}
+				&:last-child {
+					margin-bottom:0;
+				}
+				h5 {
+					margin: 0;
+					font-size: 1.1em;
+					line-height: 1.3;
+					font-weight: 400;
+					color:white;
+				}
+				p {
+					margin:0;
+					color:rgba(255, 255, 255, 0.56);
+					line-height:1.3;
+				}
+				a {
+					font-weight: normal;
+				}
+				p[data-role=loc] {
+					line-height:1;
+				}
+			}
+		}
+	}
+	&:hover {
+		.c-month-view {
+			background: rgb(35,35,35) !important;
+			[class^=c-month-arrow] {
+				color:white;
+			}
+		}
+	}
+	&.spec-day {
+		.c-grid {
+			display:none;
+		}
+		.c-specific {
+			display:block;
+		}
+		[class^=c-month-arrow] {
+			display:none;
+		}
+	}
+}
+[ewcalendar][data-showdays=false] {
+	.c-holder {
+		.c-grid {
+			.c-row {
+				@include calc(height, "100%/6 - 7px/6", 100%/6 - 1%)
+			}
+		}
+	}
+}
+
+$elements: ".c-month-view,.c-day, .specific-day, .s-event";
+
+[color=red] {
+	background-color: #E83C2C;
+	#{$elements} {
+		background-color: #C1291B;
+	}
+}
+[color=blue] {
+	background-color: #2497DB;
+	#{$elements} {
+		background-color: #3081B9;
+	}
+}
+[color=green] {
+	background-color: #2ECC70;
+	#{$elements} {
+		background-color: #28AE61;
+	}
+}
+[color=yellow] {
+	background-color: #F2C30F;
+	#{$elements} {
+		background-color: #F39C12;
+	}
+}

@@ -38,7 +38,8 @@
 		dayMachine: function(s) {
 			var a = [];a["Sunday"] = 0;a["Monday"] = 1;a["Tuesday"] = 2;a["Wednesday"] = 3;a["Thursday"] = 4;a["Friday"] = 5;a["Saturday"] = 6;
 			return a[s];
-		}
+		},
+		urlText: "View on Web"
 	}
 
 	function kalendar(element, options) {
@@ -216,7 +217,8 @@
 			var start = start.date +" "+start.month+" "+start.year+" "+ev.start.time,
 				end = end.date +" "+end.month+" "+end.year+" "+ev.end.time;
 			$event.append('<p>'+start+' - '+end+'</p>');
-			events[i].location !== undefined ? $event.append('<p>'+events[i].location+'</p>') : null;
+			!!events[i].location ? $event.append('<p>'+events[i].location+'</p>') : null;
+			!!events[i].url ? $event.append('<p><a href="'+events[i].url+'">'+self.options.urlText+'</a></p>') : null;
 			self.elements.specday_scheme.append($event);
 		}
 	}
@@ -251,9 +253,10 @@
 
 	function pushToParsed(o, e) {
 		var pusher = function(o,e,d) {
-			var d = d !== undefined ? d: e.start.date;
+			var d = !!d ? d: e.start.date;
 			var t = {
 				title: e.title,
+				url: e.url,
 				start: {
 					date: e.start.date,
 					time: e.start.time,
@@ -267,9 +270,10 @@
 				location: e.location,
 				allDay: e.allDay
 			};
-			if(o[d] == undefined) {
+			if(!o[d]) {
 				o[d] = [];
 			}
+			console.log(t);
 			o[d].push(t);
 		}
 		e.start.date = parseInt(e.start.date);
