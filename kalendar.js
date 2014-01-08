@@ -39,9 +39,14 @@
 			var a = [];a["Sunday"] = 0;a["Monday"] = 1;a["Tuesday"] = 2;a["Wednesday"] = 3;a["Thursday"] = 4;a["Friday"] = 5;a["Saturday"] = 6;
 			return a[s];
 		},
-		urlText: "View on Web"
+		urlText: "View on Web",
+		onInitiated: function() { console.log("initiated")},
+		onGoogleParsed: function() { console.log("googleparsed")},
+		onMonthChanged: function() {console.log('monthshow')},
+		onDayShow: function() { console.log('dayshow')},
+		onGridShow: function() { console.log("gridshow")},
+		onDayClick: function(e) { console.log(e.data.info)}
 	}
-
 	function kalendar(element, options) {
 		this.options = $.extend(true, {}, defaults, options);
 		this.element = element;
@@ -59,7 +64,6 @@
 		}
 		this.googleCal();
 	}
-
 	kalendar.prototype.tracking = function() {
 		$trackimg = $('<img src="">');
 		this.trackimg = $trackimg;
@@ -104,7 +108,7 @@
 			});
 		}
 		var tempEvents = this.options.eventsParsed;
-		if(this.options.googleCal !== undefined) {
+		if(!!this.options.googleCal) {
 			if(this.options.googleCal instanceof Array) {
 				for(var a=0;a<this.options.googleCal.length;a++) {
 					f(this.options.googleCal[a].calendar, this.options.googleCal[a].apikey);
@@ -112,12 +116,13 @@
 			} else {
 				f(this.options.googleCal.calendar, this.options.googleCal.apikey);
 			}
+
 		}
 
 		this.options.eventsParsed = tempEvents;
 		this.init();
+		!!this.options.googleCal ? this.options.onGoogleParsed() : null;
 	}
-
 	kalendar.prototype.init = function() {
 		this.element.html(this.options.template);
 		this.element.attr('ewcalendar','');
@@ -126,12 +131,11 @@
 		for(var ele in this.options.calendar_elements) {
 			this.elements[ele] = this.element.find(this.options.calendar_elements[ele]);
 		}
-
 		this.setMonth();
 		this.elements.prevMonth.on('click', {"self": this, "dir": "prev"}, this.changeMonth);
 		this.elements.nextMonth.on('click', {"self": this, "dir": "next"}, this.changeMonth);
+		this.options.onInitiated();
 	}
-
 	kalendar.prototype.changeMonth = function(e) {
 		var self = e.data.self;
 		var dir = e.data.dir;
@@ -141,7 +145,6 @@
 		self.currentYear = self.currentTimeSet.getFullYear();
 		self.setMonth();
 	}
-
 	kalendar.prototype.setMonth = function() {
 		var $grid = this.elements.grid;
 		$grid.html('');
@@ -170,9 +173,12 @@
 			$day = $('<div class="c-day"><div class="date-holder">'+tempDate.getDate()+'</div></div>');
 			if(tempDate.getMonth() !== this.currentTimeSet.getMonth()) {
 				$day.addClass('other-month');
-			}
-			if(tempDate.getTime() == this.currentTime.getTime()) {
+				$day.on('click', { "info": "other-month"}, this.options.onDayClick);
+			} else if(tempDate.getTime() == this.currentTime.getTime()) {
 				$day.addClass('this-day');
+				$day.on('click', { "info": "this-day"}, this.options.onDayClick);
+			} else {
+				$day.on('click', { "info": "this-month"}, this.options.onDayClick);
 			}
 			var strtime = dToFormat(tempDate, "YYYYMMDD");
 			if(this.options.eventsParsed[strtime] !== undefined) {
@@ -187,9 +193,8 @@
 			$row.append($day);
 			tempDate.setDate(tempDate.getDate() + 1);
 		}
-		
+		this.options.onMonthChanged();
 	}
-
 	kalendar.prototype.showDay = function(e) {
 		var events = e.data.day,
 			self = e.data.self,
@@ -201,8 +206,21 @@
 		self.elements.specday_trigger.on('click', {"self": self}, self.hideDay);
 		for(var i=0;i<events.length;i++) {
 			ev = events[i];
-			$event = $('<div class="s-event"></div>');
-			$event.append('<h5>'+events[i].title+'</h5>');
+			var ev_h = "",
+				ev_p = "",
+				ev_a = "",
+				ev_b = "";
+			if(!!ev.color) {
+				var c = self.options.eventcolors[ev.color];
+				if(!!c) {
+					ev_h = !!c.text ? 'style="color:'+c.text+'"' : "";
+					ev_p = !!c.text ? 'style="color:'+c.text+';opacity:0.5"' : "";
+					ev_a = !!c.link ? 'style="color:'+c.link+'"' : "";
+					ev_b = !!c.background ? 'style="background-color:'+c.background+'"' : "";
+				}
+			}
+			$event = $('<div class="s-event" '+ev_b+'></div>');
+			$event.append('<h5 '+ev_h+'>'+events[i].title+'</h5>');
 			var start = {
 				date: ev.start.date == strtime ? "": ev.start.d.getDate(),
 				month: ev.start.date == strtime ? "": self.options.monthHuman[ev.start.d.getMonth()][1],
@@ -216,20 +234,19 @@
 
 			var start = start.date +" "+start.month+" "+start.year+" "+ev.start.time,
 				end = end.date +" "+end.month+" "+end.year+" "+ev.end.time;
-			$event.append('<p>'+start+' - '+end+'</p>');
-			!!events[i].location ? $event.append('<p>'+events[i].location+'</p>') : null;
-			!!events[i].url ? $event.append('<p><a href="'+events[i].url+'">'+self.options.urlText+'</a></p>') : null;
+			$event.append('<p '+ev_p+'>'+start+' - '+end+'</p>');
+			!!events[i].location ? $event.append('<p '+ev_p+'>'+events[i].location+'</p>') : null;
+			!!events[i].url ? $event.append('<p><a '+ev_a+' href="'+events[i].url+'">'+self.options.urlText+'</a></p>') : null;
 			self.elements.specday_scheme.append($event);
 		}
+		self.options.onDayShow();
 	}
-
 	kalendar.prototype.hideDay = function(e) {
 		var self = e.data.self;
 		self.element.removeClass('spec-day');
 		self.elements.specday_scheme.html('');
+		self.options.onGridShow();
 	}
-
-
 
 
 	$.fn.kalendar = function(options) {
@@ -242,7 +259,6 @@
 					thisevent.start.d = formatToD([thisevent.start.date, thisevent.start.time], "YYYYMMDDHHMM");
 					thisevent.end.d = formatToD([thisevent.end.date, thisevent.end.time], "YYYYMMDDHHMM");
 					options.eventsParsed = pushToParsed(options.eventsParsed, thisevent);
-
 				}
 			}
 			options.source = "JS";
@@ -250,7 +266,6 @@
 			$(this).data('kalendar-instance', kalendar_instance);
 		});
 	}
-
 	function pushToParsed(o, e) {
 		var pusher = function(o,e,d) {
 			var d = !!d ? d: e.start.date;
@@ -268,12 +283,12 @@
 					d: e.end.d
 				},
 				location: e.location,
-				allDay: e.allDay
+				allDay: e.allDay,
+				color: e.color
 			};
 			if(!o[d]) {
 				o[d] = [];
 			}
-			console.log(t);
 			o[d].push(t);
 		}
 		e.start.date = parseInt(e.start.date);
@@ -342,6 +357,4 @@
 		}
 		return d;
 	}
-
-
 })(jQuery, window, document);
