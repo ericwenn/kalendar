@@ -4,12 +4,29 @@ kalendar
 Revamped version of my flat_calendar plugin. Now offers more features and easier customization.  
 Supports both custom and Google Calendar events. 
 
-Supported customizations include:  
+Features
+------
+
+* __Multiday events__ — Events can last for days and kalendar will show them correctly
+* __Google Calendar support__ — Include your calendarID and an APIkey and kalendar will show your google events as well.
+* __Customizable__ — Easy to change kalendar’s color with 4 predefined colorsets.
+* __Good performance__ — kalendar won’t use much of your precious power. Stuff are unloaded when it isn’t needed.
+
+
+Customizations 
+------
+
 * __First day of the week__ — Default is monday but could be any day of the month
 * __Toggle daylabel__
 * __Starting month/year__ — Decide which month you would like to display from start
 * __Color__
 * __Eventhooks__
+
+FAQ
+-------
+
+__When I insert the calendar, all the days are stacked upon each other. Why?__  
+There needs to be a height set on the calendar element since some inner elements use absolute positioning.
 
 Usage
 -------
@@ -118,9 +135,9 @@ Todo
 
 Changelog
 ----
-`v1.2.0 2014-01-08`: Added callback events and colors for events
-`v1.1.0 2014-01-04`: Added links for events.
-`v1.0.0 2013-12-30`: First version published, yay!
+`v1.2.0 2014-01-08`: Added callback events and colors for events.  
+`v1.1.0 2014-01-04`: Added links for events.  
+`v1.0.0 2013-12-30`: First version published, yay!  
 
 
 Thanks
