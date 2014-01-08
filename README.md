@@ -9,6 +9,7 @@ Supported customizations include:
 * __Toggle daylabel__
 * __Starting month/year__ — Decide which month you would like to display from start
 * __Color__
+* __Eventhooks__
 
 Usage
 -------
@@ -47,9 +48,18 @@ $('.example').kalendar({
 				time: "HH.MM"					// "20.00"
 			},
 			location: "Location",				// "London"
-			url: "http://*.*"					// "http://example.com"
+			url: "http://*.*",					// "http://example.com"
+			color: "string"						// "red" string containing reference to the eventcolorsobject
 		}
 	],
+	// Custom colorsets to set a specific color to an event. If one of the three variables isn’t set the inherit value will be used.
+	eventcolors: {
+		yellow: {
+			background: "#FC0",					// Backgroundcolor, optional
+			text: "#000",						// Text color, optional
+			link: "#000"						// Link color, optional
+		}
+	}
 
 	// Currently available colors are: red, blue, green, yellow. Red is the default.
 	color: "blue",
@@ -81,6 +91,15 @@ $('.example').kalendar({
 
 	urlText: "View on Web",
 
+	// Callbackevents will be fired when a certain criteria is met. The following are the currently supported events
+
+	onInitiated: function() {},					// After the kalendar have been fully initiated. E.g when everything is loaded
+	onGoogleParsed: function() {},				// After Google Calendar events, if they exist, have been parsed
+	onMonthChanged: function() {},				// After events passed to the plugin have been parsed
+	onDayShow: function() {},					// When a specific day have started to load. E.g when a day with an event attached to it is clicked
+	onGridShow: function() {},					// When the grid of days have started to load. E.g when a specific dayview have been cancelled
+	onDayClick: function(e) {}					// When a day gets clicked, no matter if it contains any event or not. Passed to this function is whether the day 												 is from this month or if it’s the current day. This can be accessed in the variable e.data.info
+
 	// I decided to track people using this plugin in order to make it even better. 
 	// The things I collect are current URL, color or kalendar, whether you decided to show days or not and your selected first day of the week.
 	// Pass this variable as false and no tracking whatsoever will be done.
@@ -94,13 +113,12 @@ Todo
 -----
 * Reccuring events, both for Google Calendar but also custom ones.
 * Add minified version
-* Unique colors for each event
 * Weeknumber
-* 
 
 
 Changelog
 ----
+`v1.2.0 2014-01-08`: Added callback events and colors for events
 `v1.1.0 2014-01-04`: Added links for events.
 `v1.0.0 2013-12-30`: First version published, yay!
 
