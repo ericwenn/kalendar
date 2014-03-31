@@ -339,16 +339,10 @@
 	function formatToD(s,f) {
 		if(f == "YYYYMMDD") {
 			s = s.toString();
-			d = new Date();
-			d.setYear(s.substring(0,4));
-			d.setMonth(s.substring(4,6)-1);
-			d.setDate(s.substring(6,8));
+			d = new Date(s.substring(0,4), (s.substring(4,6)-1), s.substring(6,8));
 		} else if(f == "YYYYMMDDHHMM") {
-			d = new Date();
 			st = s[0].toString();
-			d.setYear(st.substring(0,4));
-			d.setMonth(st.substring(4,6)-1);
-			d.setDate(st.substring(6,8));
+			d = new Date(st.substring(0,4), (st.substring(4,6)-1), st.substring(6,8));
 			st = s[1].toString();
 			st = st.split(".")[0].length < 2 ? "0"+st : st;
 			d.setHours(st.substring(0,2));
